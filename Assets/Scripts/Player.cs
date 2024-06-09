@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Entity
 {
     //здоровье
     public EntityView view;
@@ -14,23 +11,20 @@ public class Player : MonoBehaviour
     private int moveSpeedMod = 1;
     [Space] //пауза
     public bool isPaused = false;
-
-
-    void Start()
+    
+    private void Start()
     {
         hp = maxHp;
         view.ChangeHpText(hp,maxHp);
     }
 
-    void Update()
+    private void Update()
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(horizontal, vertical, 0) * moveSpeed * moveSpeedMod *Time.deltaTime;
-        transform.Translate(movement, Space.World);
-
-
+        Vector3 movement = new Vector3(horizontal, vertical, 0) * (moveSpeed * moveSpeedMod * Time.deltaTime);
+        Move(movement);
         
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -56,9 +50,8 @@ public class Player : MonoBehaviour
     {
         hp -= damage;
         view.ChangeHpText(hp,maxHp);
+        
         if (hp < 0)
-        {
             Destroy(gameObject);
-        }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Effects;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -10,13 +11,13 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy")) //todo так проверять норм?
+        if (collision.gameObject.TryGetComponent(out Enemy enemy))
         {
+            enemy.TakeDamage(damage);
+            enemy.ApplyEffect(new FireEffect(25));
             
-            collision.gameObject.GetComponent<Enemy>().TakeDamage(damage);
             Destroy(gameObject);
         }
-
     }
 
     // Update is called once per frame

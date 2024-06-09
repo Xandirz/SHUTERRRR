@@ -4,7 +4,7 @@ using Effects;
 using TMPro;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Entity
 {
     public int maxHp = 5;
     public int hp = 5;
@@ -42,7 +42,10 @@ public class Enemy : MonoBehaviour
 
         if (distance > attackRange)
         {
-            transform.Translate(direction * moveSpeed * Time.deltaTime, Space.World); //todo сделать норм pathfinding
+            var moveDirection = direction * (moveSpeed * Time.deltaTime);
+            Move(moveDirection);
+            
+            //TOdo сделать pathfinder
         }
         else
         {
@@ -75,8 +78,6 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
-    
     
     public void NewTarget(Transform newTarget)
     {

@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -24,11 +21,7 @@ public class DamagePopUp : MonoBehaviour
     public static DamagePopUp Create(Vector3 position, int DamageAmount, bool isCriticalHit, bool isHeal, string damageType)
     {
         Vector3 offset = new Vector2(Random.Range(-0.2F,0.2f), Random.Range(-0.2F,0.2f));
-        Transform damagePopUpTransform = Instantiate(GameAssets.i.pfDamagePopUp, position+offset, Quaternion.identity);
-        DamagePopUp damagePopUp = damagePopUpTransform.GetComponent<DamagePopUp>();
-        damagePopUp.SetUp(DamageAmount,isCriticalHit,isHeal, damageType);
-
-        return damagePopUp;
+        return GameAssets.Instance.DamageBox(position + offset, DamageAmount, isCriticalHit, isHeal, damageType);
     }
 
     void Awake()
@@ -101,11 +94,7 @@ public class DamagePopUp : MonoBehaviour
     public static DamagePopUp CreateMessage(Vector3 position, string text)
     {
         Vector3 offset = new Vector2(Random.Range(-0.2F,0.2f), Random.Range(-0.2F,0.2f));
-        Transform damagePopUpTransform = Instantiate(GameAssets.i.pfDamagePopUp, position+offset, Quaternion.identity);
-        DamagePopUp damagePopUp = damagePopUpTransform.GetComponent<DamagePopUp>();
-        damagePopUp.SetUpMessage(text);
-
-        return damagePopUp;
+        return GameAssets.Instance.Message(position + offset, text);
     }
     
     public void SetUpMessage(string text)

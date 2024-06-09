@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aa1da6a8064d6941b94900d12a45925, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pfDamagePopUp: {fileID: 5861779503026340845, guid: f0d617e453f9ec44f8df5ee0e5dc29e0, type: 3}
+  _damagePopUp: {fileID: 3546573424544758511, guid: f0d617e453f9ec44f8df5ee0e5dc29e0, type: 3}
