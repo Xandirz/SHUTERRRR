@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Effects;
 using TMPro;
 using UnityEngine;
@@ -20,11 +21,16 @@ public class Enemy : Entity
     public float attackRange = 1.0f;
     public float attackInterval = 1.0f;
     private float lastAttackTime;
+    [Space] private EnemyManager _enemyManager;
+       
+ 
 
     void Start()
     {
         hp = maxHp;
         view.ChangeHpText(hp,maxHp);
+        _enemyManager = FindObjectOfType<EnemyManager>();
+        _enemyManager.enemies.Add(this);
 
     }
 
@@ -52,22 +58,42 @@ public class Enemy : Entity
             transform.position = transform.position; //остановка
             Attack();
         }
+
+
         
+        foreach (var effect in currentEffects.ToList()) //todo добавил ту лист чтобы убрать Collection was modified
+        {
+            
+            StartCoroutine(RefreshEffect(effect));
+        }
         
     }
-    
+
+    private IEnumerator RefreshEffect(Effect effect)
+    {
+        Debug.Log(123);
+        for (int i =  effect.Duration; i >  effect.Duration; i--)
+        {
+            TakeDamage(effect.Damage); //todo не работает(((
+            effect.Duration--;
+            yield return new WaitForSeconds(1);
+        }
+        currentEffects.Remove(effect);
+    }
 
 
-    private void Attack()
+    private void Attack() //todo как  сделать атаку которую видно - аля взмах врага мечом который ты видишь за секунду до удара чтобы мог увернуться
     {
         if (Time.time - lastAttackTime >= attackInterval)
         {
             lastAttackTime = Time.time;
-            target.GetComponent<Player>().TakeDamage(damage);
+            var myTarget = target.GetComponent<Player>(); //todo делать так?
+            myTarget.TakeDamage(damage);
+            myTarget.AddEffect(new PoisonEffect(2,1)); 
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage) //todo давай сделаем анимацию получения урона - она есть в спрайтах
     {
         
         hp -= damage;
@@ -75,6 +101,8 @@ public class Enemy : Entity
         view.ChangeHpText(hp,maxHp);
         if (hp < 0)
         {
+            _enemyManager.enemies.Remove(this);
+            _enemyManager.enemyDied();
             Destroy(gameObject);
         }
     }

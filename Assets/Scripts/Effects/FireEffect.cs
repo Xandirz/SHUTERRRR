@@ -4,18 +4,19 @@ namespace Effects
 {
     public class FireEffect : Effect
     {
-        public FireEffect(int turnDuration) : base(turnDuration)
+        
+        public FireEffect(int duration, int damage) : base(duration, damage)
         {
+            damage = 1;
         }
 
-        public override void OnApplyEffect(Enemy enemy, int turnDuration)
+        public override void OnApplyEffect(Entity entity, int duration)
         {
-            int fireDamage = turnDuration;
         }
 
         public override Sprite GetSprite()
         {
-            return Resources.Load<Sprite>("Sprites/whiteSquare");
+            return Resources.Load<Sprite>("Sprites/Fire+Sparks1"); 
         }
     }
 }

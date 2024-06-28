@@ -4,7 +4,8 @@ namespace Effects
 {
     public abstract class Effect
     {
-        public int Duration { private set; get; }
+        public int Duration;
+        public int Damage { private set; get; }
         public bool IsPassed { private set; get; }
         
         public void AddDuration(int value)
@@ -12,28 +13,12 @@ namespace Effects
             Duration += value;
         }
         
-        public Effect(int duration)
+        public Effect(int duration, int damage)
         {
             Duration = duration;
+            Damage = damage;
         }
-
-        public void ApplyEffect(Enemy enemy)
-        {
-            if (IsPassed)
-                return;
-            
-            OnApplyEffect(enemy, Duration);
-            
-            Duration -= 1;
-            
-            if (Duration == 0)
-            {
-                IsPassed = true;
-                return;
-            }
-        }
-        
-        public abstract void OnApplyEffect(Enemy enemy, int duration);
+        public abstract void OnApplyEffect(Entity entity, int duration);  //todo больше одного эфекта почему  то не вмещается
         public abstract Sprite GetSprite();
     }
 }

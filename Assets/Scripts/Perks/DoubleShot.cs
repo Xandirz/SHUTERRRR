@@ -14,5 +14,10 @@ namespace Perks
             }
             else return 1;
         }
+
+        public override bool isFire()
+        {
+            return false;
+        }
     }
 }

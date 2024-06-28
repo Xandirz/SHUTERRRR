@@ -21,7 +21,7 @@ public class Player : Entity
     private void Update()
     {
         float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        float vertical = Input.GetAxis("Vertical"); //todo давай сделаем анимацию - спрайты есть в проекте
 
         Vector3 movement = new Vector3(horizontal, vertical, 0) * (moveSpeed * moveSpeedMod * Time.deltaTime);
         Move(movement);
@@ -32,7 +32,7 @@ public class Player : Entity
         }
     }
     
-    private void TogglePause()
+    public void TogglePause()
     {
         isPaused = !isPaused;
 
