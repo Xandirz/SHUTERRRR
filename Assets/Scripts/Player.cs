@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Player : Entity
 {
+    public PlayerConfig playerConfig;
+    
     //здоровье
     public EntityView view;
     public int maxHp = 5;

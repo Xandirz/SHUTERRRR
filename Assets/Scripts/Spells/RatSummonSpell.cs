@@ -4,14 +4,16 @@
     public class RatSummonSpell : Spell
     {
         private GameObject rat;
-        private Transform position;
-        public RatSummonSpell(Transform playerPosition)
+        private Transform transform;
+        
+        public RatSummonSpell(PlayerConfig config, Transform transform) : base(5f, config)
         {
+            this.transform = transform;
             rat = Resources.Load<GameObject>("Prefabs/Entities/Rat");
-            position = playerPosition;
         }
-        public override void Use()
+        
+        public override void OnUse()
         {
-            Object.Instantiate(rat, position.position, Quaternion.identity);
+            Object.Instantiate(rat, transform.position, Quaternion.identity);
         }
     }

@@ -1,5 +1,53 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1735779890969885426
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2428118017969891618}
+  - component: {fileID: 5781960391959037832}
+  m_Layer: 0
+  m_Name: '[PlayerConfig]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2428118017969891618
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1735779890969885426}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5245933979948025102}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5781960391959037832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1735779890969885426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4a941251c6e4d81be9271f7ca7ed095, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amountOfShots: 0
+  fireRate: 0
+  boltSpeed: 10
+  damage: 0
 --- !u!1 &5035241713896836943
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,14 +311,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 143189756688926368, guid: 16fc3bc556c205b47a3a42c5e8835063, type: 3}
-  boltSpeed: 10
-  fireRate: 1
-  damage: 1
-  canShoot: 1
   spells: {fileID: 5903445903036385418}
   rat: {fileID: 5068862792722408162, guid: 650eded526547d84ba59df7bcdeb4ae9, type: 3}
-  amountOfShots: 1
   isFire: 0
+  increaseFireRateCD: 5
+  damageAreaCD: 1
+  summonRatCD: 1
+  ratSpawnChanceMaxNumber: 101
+  playerConfig: {fileID: 5781960391959037832}
 --- !u!114 &5903445903036385418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -637,6 +685,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2428118017969891618}
   - {fileID: 2043121350167949345}
   - {fileID: 5617955434427161172}
   - {fileID: 3881060916879934296}
@@ -779,6 +828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 539644ad6c8039142b760d00613c9772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerConfig: {fileID: 5781960391959037832}
   view: {fileID: 223473291186386775}
   maxHp: 5
   hp: 5

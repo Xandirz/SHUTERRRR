@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class UpgradeMenu : MonoBehaviour
 {
-  public Gun gun;
-  public void FireRateUp()
-  {
-    gun.ChangeFireRate();
-    gameObject.SetActive(false);
-  }
+    public Gun gun;
 
-  public void IncreaseRatSpawnChance()
-  {
-    gun.ChangeRatSpawnChance();
-    gameObject.SetActive(false);
-  }
+    public void FireRateUp()
+    {
+        gun.ChangeFireRate();
+        gameObject.SetActive(false);
+    }
 
-  public void IncreaseDamage()
-  {
-    gun.damage++;
-    gameObject.SetActive(false);
+    public void IncreaseRatSpawnChance()
+    {
+        gun.ChangeRatSpawnChance();
+        gameObject.SetActive(false);
+    }
 
-  }
+    public void IncreaseDamage()
+    { 
+        //gun.damage++;
+        gameObject.SetActive(false);
+    }
 }

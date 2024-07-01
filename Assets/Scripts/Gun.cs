@@ -31,12 +31,15 @@ public class Gun : MonoBehaviour
         Perks.Add(new DoubleShot());
         Perks.Add(new FireShot());
         Perks.Add(new RatShot());
-        Spells.Add(new RatSummonSpell(transform));
+        Spells.Add(new RatSummonSpell(playerConfig, transform));
     }
 
     // Update is called once per frame
     void Update()  //todo когда нажимаешь на спелл и он не откатился  то делать  попап сколько осталось  ждать
     {
+        foreach (var spell in Spells)
+            spell.Tick();
+        
         if (Input.GetMouseButton(0) && Time.time > nextFireTime  && Time.timeScale > 0)
         {
             ShootBolt();
@@ -74,6 +77,8 @@ public class Gun : MonoBehaviour
 
     public void ShootBolt()
     {
+        playerConfig.onShoot.Invoke();
+        
         foreach (Perk perk in Perks)
         {
             playerConfig.amountOfShots += perk.AmountOfShots();
