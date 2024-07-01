@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class Entity : MonoBehaviour
 {
-    public event Action OnChangeEffects;
+    public Action OnChangeEffects;
     
     public List<Effect> currentEffects = new List<Effect>();
 

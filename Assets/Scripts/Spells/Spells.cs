@@ -7,7 +7,7 @@ using UnityEngine;
         public Gun gun;
         public CircleCollider2D area;
         public GameObject rat;
-
+        
         public void IncreaseFireRate()
         {
             StartCoroutine(FireRateIncreaseCountdown());
@@ -37,12 +37,13 @@ using UnityEngine;
             foreach (var hitCollider in hitColliders)
             {
                 Enemy enemy = hitCollider.GetComponent<Enemy>();
-                if (hitCollider.CompareTag("Enemy"))
+                if (enemy != null)
                 {
                     enemy.TakeDamage(damage);
                     Vector2 dir = transform.position - enemy.gameObject.transform.position;
                     enemy.GetComponent<Rigidbody2D>().AddForce(-dir * 3f,  ForceMode2D.Impulse); //todo можно толкать  иначе?
                 }
+                   
             }
 
         }

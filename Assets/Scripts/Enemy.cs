@@ -22,8 +22,11 @@ public class Enemy : Entity
     public float attackInterval = 1.0f;
     private float lastAttackTime;
     [Space] private EnemyManager _enemyManager;
-       
- 
+    public SpriteRenderer enemyHitArea;
+    private bool canAttack = false;
+    private float attackDelay = 1;
+    private float effectDurationTimer;
+    private float timer;
 
     void Start()
     {
@@ -42,54 +45,89 @@ public class Enemy : Entity
             NewTarget(null);
         }
 
-        Vector3 direction = (target.position - transform.position).normalized;
-
-        float distance = Vector3.Distance(target.position, transform.position);
-
-        if (distance > attackRange)
+        if (!canAttack)
         {
-            var moveDirection = direction * (moveSpeed * Time.deltaTime);
-            Move(moveDirection);
+            Vector3 direction = (target.position - transform.position).normalized;
+
+            enemyHitArea.transform.localPosition = direction;
+
+            enemyHitArea.transform.right = direction;
+
+            float distance = Vector3.Distance(target.position, transform.position);
+
+            if (distance > attackRange)
+            {
+                var moveDirection = direction * (moveSpeed * Time.deltaTime);
+                Move(moveDirection);
             
-            //TOdo сделать pathfinder
-        }
-        else
-        {
-            transform.position = transform.position; //остановка
-            Attack();
+                //TOdo сделать pathfinder
+            }
+            else
+            {
+                transform.position = transform.position; //остановка
+                canAttack = true;
+                enemyHitArea.gameObject.SetActive(true);
+
+            }
         }
 
 
-        
-        foreach (var effect in currentEffects.ToList()) //todo добавил ту лист чтобы убрать Collection was modified
+        if (canAttack)
         {
-            
-            StartCoroutine(RefreshEffect(effect));
+            timer += Time.deltaTime; 
+            if (timer > attackDelay)
+            {
+                timer = 0;
+                
+                Attack();
+                canAttack = false;
+                enemyHitArea.gameObject.SetActive(false);
+            }
+        }
+
+        effectDurationTimer += Time.deltaTime;
+        if (effectDurationTimer > 1)
+        {
+            effectDurationTimer = 0;
+            foreach (var effect in currentEffects.ToList())
+            {
+                TakeDamage(effect.Damage);
+            }
+
+        }
+
+        foreach (var effect in currentEffects.ToList()) 
+        {
+            effect.Duration -= Time.deltaTime;
+            if (effect.Duration < 0)
+            {
+                currentEffects.Remove(effect);
+                OnChangeEffects?.Invoke();
+            }
         }
         
     }
 
-    private IEnumerator RefreshEffect(Effect effect)
-    {
-        Debug.Log(123);
-        for (int i =  effect.Duration; i >  effect.Duration; i--)
-        {
-            TakeDamage(effect.Damage); //todo не работает(((
-            effect.Duration--;
-            yield return new WaitForSeconds(1);
-        }
-        currentEffects.Remove(effect);
-    }
-
-
-    private void Attack() //todo как  сделать атаку которую видно - аля взмах врага мечом который ты видишь за секунду до удара чтобы мог увернуться
+  
+  
+    private void Attack() 
     {
         if (Time.time - lastAttackTime >= attackInterval)
         {
-            lastAttackTime = Time.time;
-            var myTarget = target.GetComponent<Player>(); //todo делать так?
-            myTarget.TakeDamage(damage);
-            myTarget.AddEffect(new PoisonEffect(2,1)); 
+            float zRotation = enemyHitArea.transform.eulerAngles.z;
+            float angleInRadians = zRotation * Mathf.Deg2Rad;
+            Collider2D[] hitColliders = Physics2D.OverlapBoxAll(enemyHitArea.transform.position, enemyHitArea.size, angleInRadians);
+           
+            foreach (var hitCollider in hitColliders)
+            {
+                Player enemy = hitCollider.GetComponent<Player>();
+                if (enemy != null)
+                {
+                    enemy.TakeDamage(damage);
+                    enemy.AddEffect(new PoisonEffect(2,1)); 
+                }
+                   
+            }
         }
     }
 

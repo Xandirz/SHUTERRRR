@@ -92,7 +92,7 @@ public class Gun : MonoBehaviour
         StartCoroutine(ShootBoltCoroutine());
     }
     
-    private IEnumerator ShootBoltCoroutine() //todo норм ли корутиной сделать?
+    private IEnumerator ShootBoltCoroutine() 
     {
         for (int i = 0; i < amountOfShots; i++)
         {
@@ -104,10 +104,15 @@ public class Gun : MonoBehaviour
             bullet.damage = damage;
             rb.velocity = direction * boltSpeed;
 
-            if (isFire) //todo думаю нужно чтобы проверка шанса делалась для каждой пули
+
+            foreach (Perk perk in Perks) 
             {
-                bullet.isFire = true;
+                if (perk is FireShot firePerk)
+                {
+                    isFire = firePerk.isFire();
+                }
             }
+            
 
             yield return new WaitForSeconds(0.1f);  
         }
