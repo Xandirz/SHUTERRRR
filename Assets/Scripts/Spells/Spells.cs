@@ -7,14 +7,14 @@ using UnityEngine;
         public Gun gun;
         public CircleCollider2D area;
         public GameObject rat;
-        
+
         public void IncreaseFireRate()
         {
             StartCoroutine(FireRateIncreaseCountdown());
-            if (gun.fireRate > 0.5f)
-            {
-                gun.fireRate -= 0.5f;
-            }
+           // if (gun.fireRate > 0.5f)
+         //   {
+          //      gun.fireRate -= 0.5f;
+         //   }
         }
 
         public IEnumerator FireRateIncreaseCountdown()
@@ -24,12 +24,9 @@ using UnityEngine;
             {
                 yield return new WaitForSeconds(1); 
             }     
-            gun.fireRate += 0.5f;
+         //   gun.fireRate += 0.5f;
         }
-
-
-    
-
+        
         public void DamageArea(int damage)
         {
             Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, area.radius);
@@ -43,9 +40,7 @@ using UnityEngine;
                     Vector2 dir = transform.position - enemy.gameObject.transform.position;
                     enemy.GetComponent<Rigidbody2D>().AddForce(-dir * 3f,  ForceMode2D.Impulse); //todo можно толкать  иначе?
                 }
-                   
             }
-
         }
         
         public void SummonRat(Vector3 position)

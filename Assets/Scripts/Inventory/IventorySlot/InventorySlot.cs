@@ -110,7 +110,7 @@ namespace Inventory
             {
                 if (inventory.TryDragItemFromSlot(Item))
                 {
-                    // Debug.Log("Drag started");
+                    Debug.Log("Drag started");
                     isDrag = true;
                 }
             }

@@ -41,10 +41,6 @@ namespace Inventory
                 backPackSlot.Add(slot);
             }
 
-    
-
-          
-            
             head.Construct(this);
             body.Construct(this);
             
