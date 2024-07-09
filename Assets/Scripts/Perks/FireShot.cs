@@ -2,14 +2,20 @@
 {
     public class FireShot : Perk
     {
-        public override int AmountOfShots()
+
+
+        public FireShot(PlayerConfig playerConfig) : base(playerConfig)
         {
-            return 0;
         }
 
-        public override bool isFire()
+        public override void OnActivate()
         {
-           return GetChance(60);
+            throw new System.NotImplementedException();
+        }
+
+        public override void OnDeactivate()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

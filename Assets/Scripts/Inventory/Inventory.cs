@@ -31,6 +31,9 @@ namespace Inventory
         public event Action onEquippedItemsChange;
         private Item dragItem;
 
+        public PlayerConfig playerConfig;
+        public int damageFromItems = 0;
+
         private void Awake()
         {
             for (int i = 0; i < numberOfBackpackSlots; i++)
@@ -181,6 +184,9 @@ namespace Inventory
 
         public void RefreshInventoryStats()
         {
+            playerConfig.damage -= damageFromItems; //todo так ли делать обнуление?
+            damageFromItems = 0;
+            
             string perk = "";
             string weaponType = "";
             int attack = 0;
@@ -197,11 +203,12 @@ namespace Inventory
                     {
                         var item = equipSlot.Item;
                         equippedItems.Add(item);
+                        damageFromItems += item.Stats.Attack;
                     }
                 }
             }
 
-         
+            playerConfig.damage += damageFromItems;
 
             if (onEquippedItemsChange != null)
             {

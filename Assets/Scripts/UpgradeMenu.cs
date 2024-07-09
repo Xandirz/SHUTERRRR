@@ -19,8 +19,8 @@ public class UpgradeMenu : MonoBehaviour
     }
 
     public void IncreaseDamage()
-    { 
-        //gun.damage++;
+    {
+        gun.playerConfig.damage++;
         gameObject.SetActive(false);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Perks;
@@ -11,29 +12,46 @@ public class Gun : MonoBehaviour
     private float nextFireTime = 0.0f;
     public List<Perk> Perks = new List<Perk>();
     public List<Spell> Spells = new List<Spell>();
-    public Spells spells;
     public GameObject rat;
-    public bool isFire = false;
-    [Space] 
-    public float increaseFireRateCD = 5f;
-    private float next1; //todo как не делать кд и время использование спела каждый раз для каждого спела
-    public float damageAreaCD = 1;
-    private float next2;
-    public float summonRatCD = 1;
-    private float next3;
+    [Space]
     public int ratSpawnChanceMaxNumber = 101;
+
+    public bool isFire;
+    public CircleCollider2D circleArea;
 
     [Space] 
     public PlayerConfig playerConfig;
     // Start is called before the first frame update
     void Start()
     {
-        Perks.Add(new DoubleShot());
-        Perks.Add(new FireShot());
-        Perks.Add(new RatShot());
-        Spells.Add(new RatSummonSpell(playerConfig, transform));
+            AddPerk(new DoubleShotPerk(playerConfig));
+            AddPerk(new FireShot(playerConfig));
+            AddPerk(new RatShot(playerConfig));
+
+           // RemovePerk<DoubleShotPerk>();            
+            
+            Spells.Add(new RatSummonSpell(playerConfig, transform));
+            Spells.Add(new IncreaseFireRate(5, 5, playerConfig));
+            Spells.Add(new PushSpell(1, transform, circleArea, playerConfig));
     }
 
+    public void AddPerk(Perk perk)
+    {
+        Perks.Add(perk);
+        perk.OnActivate();
+    }
+    public void RemovePerk<T>() where T:Perk
+    {
+        foreach (var perk in Perks)
+        {
+
+            if (perk is T)
+            {
+                perk.OnDeactivate();
+                Perks.Remove(perk);
+            }
+        }
+    }
     // Update is called once per frame
     void Update()  //todo когда нажимаешь на спелл и он не откатился  то делать  попап сколько осталось  ждать
     {
@@ -46,21 +64,18 @@ public class Gun : MonoBehaviour
             nextFireTime = Time.time + playerConfig.fireRate;
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1)&& Time.time > next1)
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            spells.IncreaseFireRate();
-            next1  = Time.time + increaseFireRateCD;
+            Use<IncreaseFireRate>();
         }
         
-        if (Input.GetKeyDown(KeyCode.Alpha2)&& Time.time > next2)
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            spells.DamageArea(playerConfig.damage);
-            next2  = Time.time + damageAreaCD;
+            Use<PushSpell>();
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3)&& Time.time > next3)
+        if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             Use<RatSummonSpell>();
-            next3  = Time.time + summonRatCD;
         }
     }
 
@@ -77,31 +92,8 @@ public class Gun : MonoBehaviour
 
     public void ShootBolt()
     {
-        playerConfig.onShoot.Invoke();
         
-        foreach (Perk perk in Perks)
-        {
-            playerConfig.amountOfShots += perk.AmountOfShots();
-        }
-
-        foreach (Perk perk in Perks) //todo как сделать иначе
-        {
-            if (perk is FireShot firePerk)
-            {
-                isFire = firePerk.isFire();
-            }
-
-            if (perk is RatShot ratPerk)
-            {
-                //ratPerk.SummonRat(transform.position); //todo по  хорошему мне надо сделать так но я не могу в перк засунуть  префаб
-                
-                
-                if (ratPerk.GetChance(ratSpawnChanceMaxNumber))
-                {
-                    GameObject summon = Instantiate(rat, transform.position, Quaternion.identity);
-                }
-            } 
-        }
+      
 
 
         StartCoroutine(ShootBoltCoroutine());
@@ -109,6 +101,7 @@ public class Gun : MonoBehaviour
     
     private IEnumerator ShootBoltCoroutine() 
     {
+        playerConfig.onPreShoot.Invoke();
         for (int i = 0; i < playerConfig.amountOfShots; i++)
         {
             var position = transform.position;
@@ -120,19 +113,12 @@ public class Gun : MonoBehaviour
             rb.velocity = direction * playerConfig.boltSpeed;
 
 
-            foreach (Perk perk in Perks) 
-            {
-                if (perk is FireShot firePerk)
-                {
-                    isFire = firePerk.isFire();
-                }
-            }
             
 
             yield return new WaitForSeconds(0.1f);  
         }
 
-        playerConfig.amountOfShots = 1;
+        playerConfig.onShoot.Invoke();
     }
 
     public void ChangeFireRate()

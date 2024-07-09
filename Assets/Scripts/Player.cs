@@ -13,6 +13,10 @@ public class Player : Entity
     private int moveSpeedMod = 1;
     [Space] //пауза
     public bool isPaused = false;
+
+    [Space]
+    public bool isMoving = false;
+    public Vector3 faceDirection;
     
     private void Start()
     {
@@ -23,10 +27,14 @@ public class Player : Entity
     private void Update()
     {
         float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical"); //todo давай сделаем анимацию - спрайты есть в проекте
+        float vertical = Input.GetAxis("Vertical");
 
         Vector3 movement = new Vector3(horizontal, vertical, 0) * (moveSpeed * moveSpeedMod * Time.deltaTime);
         Move(movement);
+        
+        isMoving = movement.magnitude > 0.1;
+        faceDirection = movement;
+
         
         if (Input.GetKeyDown(KeyCode.Space))
         {

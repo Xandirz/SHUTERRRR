@@ -6,7 +6,7 @@
         private GameObject rat;
         private Transform transform;
         
-        public RatSummonSpell(PlayerConfig config, Transform transform) : base(5f, config)
+        public RatSummonSpell(PlayerConfig config, Transform transform) : base(2f, config)
         {
             this.transform = transform;
             rat = Resources.Load<GameObject>("Prefabs/Entities/Rat");

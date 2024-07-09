@@ -5,24 +5,19 @@ namespace Perks
     public class RatShot :  Perk
     {
         public Rat rat;
-        public override int AmountOfShots()
+
+        public RatShot(PlayerConfig playerConfig) : base(playerConfig)
         {
-            return 0;
         }
 
-        public override bool isFire()
+        public override void OnActivate()
         {
-            return false;
+            throw new System.NotImplementedException();
         }
 
-        public bool GetChance(int maxChance)
+        public override void OnDeactivate()
         {
-            int chance = Random.Range(0, maxChance); 
-            if (chance < 20)
-            {
-                return true;
-            }
-            else return false;
+            throw new System.NotImplementedException();
         }
     }
 }

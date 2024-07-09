@@ -4,17 +4,11 @@ namespace Perks
 {
     public abstract class Perk
     {
-        public abstract int AmountOfShots();
-        public abstract bool isFire();
-
-        public bool GetChance(int numberToBeMoreThan)
+        public Perk(PlayerConfig playerConfig)
         {
-            int chance = Random.Range(0, 101); 
-            if (chance < numberToBeMoreThan)
-            {
-                return false;
-            }
-            else return true;
         }
+
+        public abstract void OnActivate();
+        public abstract void OnDeactivate();
     }
 }

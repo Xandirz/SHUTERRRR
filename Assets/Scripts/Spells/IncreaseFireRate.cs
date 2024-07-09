@@ -18,8 +18,8 @@ public class IncreaseFireRate : Spell
 
     private IEnumerator IncreaseFireRateRoutine()
     {
-        PlayerConfig.fireRate += 10;
+        PlayerConfig.fireRate -= 0.5f;
         yield return new WaitForSeconds(effectDuration);
-        PlayerConfig.fireRate -= 10;
+        PlayerConfig.fireRate += 0.5f;
     }
 }
