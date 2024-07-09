@@ -29,11 +29,13 @@ public class Player : Entity
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(horizontal, vertical, 0) * (moveSpeed * moveSpeedMod * Time.deltaTime);
+        Vector3 direction = new Vector3(horizontal, vertical, 0);
+        Vector3 movement = direction * (moveSpeed * moveSpeedMod * Time.deltaTime);
+        
         Move(movement);
         
-        isMoving = movement.magnitude > 0.1;
-        faceDirection = movement;
+        isMoving = direction.magnitude > 0.1;
+        faceDirection = direction;
 
         
         if (Input.GetKeyDown(KeyCode.Space))

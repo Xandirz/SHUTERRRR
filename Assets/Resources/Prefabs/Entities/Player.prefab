@@ -1,5 +1,60 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &73688459157739245
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4771915907036399769}
+  - component: {fileID: 3963245840286825700}
+  m_Layer: 0
+  m_Name: Idle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4771915907036399769
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73688459157739245}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.21537547, y: -0.42089093, z: 0.0035941512}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2043121350167949345}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3963245840286825700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73688459157739245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e55e26900554dc2bebfb19b2a1eb574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 1181020888670399189}
+  _speedPerFrame: 0.1
+  playerWalkSprites:
+  - {fileID: -411679390, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
+  - {fileID: 1878977584, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
+  - {fileID: -1101079037, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
+  - {fileID: -1780660360, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
+  - {fileID: -1780660360, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
+  - {fileID: -1101079037, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
+  - {fileID: 1878977584, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
+  - {fileID: -411679390, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
 --- !u!1 &1735779890969885426
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,6 +285,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2043121350167949345}
   - component: {fileID: 223473291186386775}
+  - component: {fileID: 6902212052437848787}
   - component: {fileID: 1181020888670399189}
   m_Layer: 0
   m_Name: EntityView
@@ -251,6 +307,8 @@ Transform:
   m_LocalScale: {x: 4.5051904, y: 4.5051904, z: 4.5051904}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4771915907036399769}
+  - {fileID: 5818891194230045782}
   - {fileID: 5058136373621664594}
   m_Father: {fileID: 5245933979948025102}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -267,8 +325,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpText: {fileID: 5736220552446639529}
-  player: {fileID: 0}
-  spriteRenderer: {fileID: 0}
+--- !u!114 &6902212052437848787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5715788540689905392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a1e131e6d8a49c2b3676060a124ff60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 501311659916000461}
+  spriteRenderer: {fileID: 1181020888670399189}
+  walkAnimator: {fileID: 6650658493735113326}
+  idleAnimator: {fileID: 3963245840286825700}
 --- !u!212 &1181020888670399189
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -820,3 +892,68 @@ MonoBehaviour:
   isPaused: 0
   isMoving: 0
   faceDirection: {x: 0, y: 0, z: 0}
+--- !u!1 &8892280510866063863
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5818891194230045782}
+  - component: {fileID: 6650658493735113326}
+  m_Layer: 0
+  m_Name: Walk
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &5818891194230045782
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8892280510866063863}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.21537547, y: -0.42089093, z: 0.0035941512}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2043121350167949345}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6650658493735113326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8892280510866063863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e55e26900554dc2bebfb19b2a1eb574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 1181020888670399189}
+  _speedPerFrame: 0.1
+  playerWalkSprites:
+  - {fileID: 1323991589, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
+  - {fileID: -1272792870, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
+  - {fileID: 1960881453, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
+  - {fileID: 842234228, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
+  - {fileID: -1776396460, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
+  - {fileID: 1280614321, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
+  - {fileID: -672354772, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
+  - {fileID: -318474457, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
+  - {fileID: 9235146, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
+  - {fileID: -1763390657, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
+  - {fileID: -1827164657, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
+  - {fileID: 516504575, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
+  - {fileID: 992656689, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
+  - {fileID: -45647573, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
+  - {fileID: -109782408, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
+  - {fileID: 1898785433, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
+  - {fileID: -636681527, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
+  - {fileID: -379411368, guid: 44d5b44610dfdb34bbb2dd057ced5aab, type: 3}
